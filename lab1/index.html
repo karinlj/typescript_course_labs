@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typescript Labs - lab1</title>
+  </head>
+  <body>
+    <header>
+      <h1>Typescript Labs - Lab1</h1>
+    </header>
+
+    <main>
+      <section>
+        <h2 class="site-heading">Basics</h2>
+
+        <h3>1.1. Grundläggande DOM-manipulation</h3>
+
+        <h4 class="heading-one">First heading tag</h4>
+        <p class="paragraph-one">First paragraph tag</p>
+        <div class="div-one"></div>
+      </section>
+
+      <section>
+        <h3>1.2. Typer och DOM</h3>
+
+        <form class="cat-form">
+          <label
+            >Name:
+            <input type="text" id="catName" />
+          </label>
+
+          <label
+            >Description:
+            <textarea id="catDescription"></textarea>
+          </label>
+
+          <label
+            >Go Out?:
+            <input
+              type="checkbox"
+              id="goOutside"
+              name="goOutside"
+              checked="true"
+              checked
+            />
+          </label>
+
+          <section class="cat-color">
+            <h4>Color:</h4>
+            <label>
+              Tigré:
+              <input
+                type="radio"
+                name="color"
+                id="color1"
+                value="tigre"
+                checked
+              />
+            </label>
+            <label>
+              Svart:
+              <input type="radio" name="color" id="color2" value="svart" />
+            </label>
+            <label>
+              SvartVit:
+              <input type="radio" name="color" id="color3" value="svartVit" />
+            </label>
+          </section>
+
+          <div class="btn-container">
+            <button class="submit-btn" type="submit">Send</button>
+          </div>
+        </form>
+      </section>
+
+      <section>
+        <h3>2.1. Grundläggande DOM-händelser</h3>
+      </section>
+
+      <section>
+        <h3>2.2. Händelser och typer</h3>
+      </section>
+
+      <section>
+        <h2 class="site-heading">Todo App 1</h2>
+
+        <h3>Todolist</h3>
+        <ul class="todo-list"></ul>
+
+        <h3>Create a new Todo</h3>
+        <form class="new-todo-form">
+          <label
+            >Title:
+            <input
+              type="text"
+              class="new-todo-title"
+              name="title"
+              placeholder="Enter a description of your new todo..."
+          /></label>
+
+          <div class="btn-container">
+            <button type="submit" class="btn btn-success">Create Todo</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>Typescript - Medieinstitutet - 2024</p>
+    </footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
