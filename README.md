@@ -2,4 +2,6 @@
 
 ## Exercises for practising TypeScript
 
-![Screenshot](screenshot.jpg?raw=true "Screenshot")
+<!-- ![Screenshot](screenshot.jpg?raw=true "Screenshot") -->
+
+![Screenshot](./Screenshot.jpg?raw=true "Screenshot")
