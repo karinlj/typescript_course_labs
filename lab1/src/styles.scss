@@ -24,7 +24,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e4b849;
+  border-bottom: 1px solid #e4b849; //#ff9966;
+
   span {
     font-size: 2rem;
     font-weight: 600;
@@ -63,7 +64,6 @@ h1,
 h2,
 h3,
 a {
-  color: #ff9966;
   color: #e4b849;
 }
 h1 {
@@ -106,6 +106,15 @@ button {
   white-space: nowrap;
   &:hover {
     background: #3baff7;
+  }
+}
+.delete-todo {
+  padding: 0.3rem 0.5rem;
+  background: transparent;
+  font-size: 1.4rem;
+  color: red;
+  &:hover {
+    background: #006666;
   }
 }
 .btn-container {

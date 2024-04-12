@@ -76,10 +76,10 @@ const todos: Todo[] = [
 ];
 
 //find elements
-const todoListEl = document.querySelector<HTMLUListElement>(".todo-list");
-const newTodoFormEl = document.querySelector<HTMLFormElement>(".new-todo-form");
+const todoListEl = document.querySelector<HTMLUListElement>("#todo-list");
+const newTodoFormEl = document.querySelector<HTMLFormElement>("#new-todo-form");
 const newTodoInputEl =
-  document.querySelector<HTMLFormElement>(".new-todo-input");
+  document.querySelector<HTMLFormElement>("#new-todo-input");
 
 const createTodoElement = (todo: Todo) => {
   const listItem = document.createElement("li");

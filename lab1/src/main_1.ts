@@ -76,11 +76,10 @@ let todos: Todo[] = [
 ];
 
 //find elements
-//find elements
-const todoListEl = document.querySelector<HTMLUListElement>(".todo-list")!;
-const newTodoFormEl = document.querySelector<HTMLFormElement>(".new-todo-form");
+const todoListEl = document.querySelector<HTMLUListElement>("#todo-list")!;
+const newTodoFormEl = document.querySelector<HTMLFormElement>("#new-todo-form");
 const newTodoInputEl =
-  document.querySelector<HTMLFormElement>(".new-todo-input");
+  document.querySelector<HTMLFormElement>("#new-todo-input");
 
 //global scope
 const _global = window /* browser */ as any;
@@ -90,7 +89,7 @@ const renderTodos = () => {
   todoListEl.innerHTML = todos
     .map((todo) => {
       // console.log("renderTodos-todo:", todo);
-      return `<li id="listItem" class="list-item">
+      return `<li id="new-todo-input" class="list-item">
         <span  class="${todo.completed ? "completed" : ""}"> ${
         todo.title
       }</span>

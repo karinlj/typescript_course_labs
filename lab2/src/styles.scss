@@ -24,7 +24,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e4b849;
+  border-bottom: 1px solid #e4b849; //#ff9966;
+
   span {
     font-size: 2rem;
     font-weight: 600;
@@ -54,12 +55,15 @@ nav {
 section {
   padding: 0.5rem 0;
 }
+.part {
+  border-bottom: 1px dotted #e4b849;
+  margin-bottom: 3rem;
+}
 
 h1,
 h2,
 h3,
 a {
-  color: #ff9966;
   color: #e4b849;
 }
 h1 {
@@ -73,13 +77,10 @@ form {
   padding: 3rem 2rem;
   border-radius: 10px;
 }
-label,
+
 input[type="text"],
 textarea {
   display: block;
-}
-input[type="text"],
-textarea {
   min-height: 2.5rem;
   padding: 0.5rem;
   margin: 0.5rem 0 1.5rem;
@@ -107,6 +108,15 @@ button {
     background: #3baff7;
   }
 }
+.delete-todo {
+  padding: 0.3rem 0.5rem;
+  background: transparent;
+  font-size: 1.4rem;
+  color: red;
+  &:hover {
+    background: #006666;
+  }
+}
 .btn-container {
   width: 60%;
   display: flex;
@@ -115,17 +125,23 @@ button {
 .todo-list {
   padding-bottom: 1rem;
   li.list-item {
-    padding: 0.8rem;
+    padding: 1rem 2rem;
     margin-bottom: 0.2rem;
     background: #004d4d;
     border-radius: 10px;
     transition: 0.2s background-color ease-in;
-
-    &.completed {
-      text-decoration: line-through;
-    }
+    display: flex;
+    justify-content: space-between;
     &:hover {
       background: #003333;
+    }
+  }
+  input[type="checkbox"] {
+    margin-right: 1rem;
+  }
+  span {
+    &.completed {
+      text-decoration: line-through;
     }
   }
 }
