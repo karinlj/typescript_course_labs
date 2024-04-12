@@ -109,7 +109,7 @@ button {
   }
 }
 .delete-todo {
-  padding: 0.3rem 0.5rem;
+  padding: 0.1rem 0.5rem;
   background: transparent;
   font-size: 1.4rem;
   color: red;
@@ -132,6 +132,7 @@ button {
     transition: 0.2s background-color ease-in;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     &:hover {
       background: #003333;
     }

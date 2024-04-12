@@ -1,31 +1,33 @@
 import "./styles.scss";
+import { Todo } from "./todo_types";
+import {
+  getTodosFetch,
+  createTodoFetch,
+  getTodos,
+  createTodo,
+  updateTodoFetch,
+  updateTodo,
+  deleteTodoFetch,
+  deleteTodo,
+} from "./api";
+import { CreateTodoData } from "./todo_types";
 
 ///////////Todolist 1
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
-};
-
-//original list
-let todos: Todo[] = [
-  {
-    id: 1,
-    title: "Make dinner",
-    completed: true,
-  },
-  {
-    id: 2,
-    title: "Dancing",
-    completed: false,
-  },
-];
-
 //find elements
-const todoListEl = document.querySelector<HTMLUListElement>("#todo-list");
+const todoListEl = document.querySelector<HTMLUListElement>("#todo-list")!;
 const newTodoFormEl = document.querySelector<HTMLFormElement>("#new-todo-form");
-const newTodoInputEl =
-  document.querySelector<HTMLFormElement>("#new-todo-input");
+
+//local variable
+let todos: Todo[] = [];
+
+//need to have async-await, so new function
+const getTodosAndRender = async () => {
+  //get todos from serer
+  todos = await getTodosFetch();
+
+  //render UI
+  renderTodos();
+};
 
 //global scope
 const _global = window /* browser */ as any;
@@ -34,7 +36,7 @@ const _global = window /* browser */ as any;
 const renderTodos = () => {
   todoListEl.innerHTML = todos
     .map((todo) => {
-      // console.log("renderTodos-todo:", todo);
+      //   console.log("renderTodos-todo:", todo);
       return `<li id="listItem" class="list-item">
         <span  class="${todo.completed ? "completed" : ""}"> ${
         todo.title
@@ -50,50 +52,68 @@ const renderTodos = () => {
     .join("");
 };
 
-_global.deleteTodo = (id: number) => {
-  const updatedTodos = todos.filter((todo) => {
-    return todo.id != id;
-  });
-  todos = updatedTodos;
-  //render UI list
-  renderTodos();
-};
-_global.toggleCompleted = (id: number) => {
-  //map/if -> search for item to modify
-  const updatedTodos = todos.map((todo) => {
-    if (todo.id === id) {
-      return { ...todo, completed: !todo.completed };
-    } else return todo;
-  });
-  todos = updatedTodos;
-  //render UI list
-  renderTodos();
-};
-
-//initial render UI list
-renderTodos();
-
 //submit form
-newTodoFormEl?.addEventListener("submit", (e) => {
+//create new todo, POST and rerender
+newTodoFormEl?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  //id
-  const todoIds: number[] = todos.map((todo) => todo.id); // [1, 2, 3]
-  const maxId = Math.max(0, ...todoIds); // Math.max( 1, 2, 3 )
+
+  const newTodoInputEl =
+    document.querySelector<HTMLFormElement>("#new-todo-input");
 
   //new todo
-  const newTodo: Todo = {
-    id: maxId,
+  const newTodo: CreateTodoData = {
     title: newTodoInputEl?.value,
     completed: false,
   };
 
-  //push to list
-  todos.push(newTodo);
-  // console.log("todos: ", todos);
-  //render UI list
-  renderTodos();
+  //UTAN DB
+  //todos.push(newTodo);
+
+  // POST new todo to API
+  await createTodoFetch(newTodo);
 
   if (newTodoInputEl) {
     newTodoInputEl.value = "";
   }
+  //render UI list
+  getTodosAndRender();
 });
+
+//toggleCompleted
+_global.toggleCompleted = async (id: number) => {
+  //UTAN DB
+  //map/if -> search for item to modify
+  // const updatedTodos = todos.map((todo) => {
+  //   if (todo.id === id) {
+  //     return { ...todo, completed: !todo.completed };
+  //   } else return todo;
+  // });
+  // todos = updatedTodos;
+  // renderTodos();
+
+  //search for item to modify
+  const todo = todos.find((todo) => todo.id === id);
+  if (!todo) {
+    return;
+  }
+  await updateTodoFetch(id, { completed: !todo.completed });
+  //render UI list
+  getTodosAndRender();
+};
+
+//delete
+_global.deleteTodo = async (id: number) => {
+  //UTAN DB
+  //   const updatedTodos = todos.filter((todo) => {
+  //     return todo.id != id;
+  //   });
+  //   todos = updatedTodos;
+  //   renderTodos();
+
+  await deleteTodoFetch(id);
+  //render UI list
+  getTodosAndRender();
+};
+
+//initial render UI list
+getTodosAndRender();
