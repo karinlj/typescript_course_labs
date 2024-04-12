@@ -19,6 +19,11 @@ firstDiv.innerHTML = "Hello World!";
 // type casting: as. Never gonna be null
 const myForm = document.querySelector(".cat-form") as HTMLFormElement;
 //                                                               ^?
+
+// const toggleComplete = () => {
+//   console.log("toggleComplete");
+// };
+
 //Optional chaining (?.)
 myForm?.addEventListener("submit", (e: Event) => {
   e.preventDefault();
@@ -50,15 +55,6 @@ myForm?.addEventListener("submit", (e: Event) => {
 });
 
 ///////////Todolist 1
-const todoListEl = document.querySelector<HTMLUListElement>(".todo-list")!;
-// console.log("todoListEl: ", todoListEl);
-
-const newTodoForm = document.querySelector<HTMLFormElement>(".new-todo-form");
-// console.log("newTodoForm: ", newTodoForm);
-
-const newTodoTitleEl =
-  document.querySelector<HTMLFormElement>(".new-todo-title");
-
 type Todo = {
   id: number;
   title: string;
@@ -79,50 +75,57 @@ const todos: Todo[] = [
   },
 ];
 
-//render list
-const renderTodos = () => {
-  todoListEl.innerHTML = todos
-    .map((todo) => {
-      return `<li id="listItem" class="list-item ${
-        todo.completed ? "completed" : ""
-      }">
-    ${todo.title}
-  </li>`;
-    })
-    .join("");
+//find elements
+const todoListEl = document.querySelector<HTMLUListElement>(".todo-list");
+const newTodoFormEl = document.querySelector<HTMLFormElement>(".new-todo-form");
+const newTodoInputEl =
+  document.querySelector<HTMLFormElement>(".new-todo-input");
+
+const createTodoElement = (todo: Todo) => {
+  const listItem = document.createElement("li");
+  listItem.classList.add("list-item");
+  const text = document.createElement("span");
+  text.innerHTML = todo.title;
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = todo.completed;
+  checkbox.addEventListener("change", () => {
+    todo.completed = checkbox.checked;
+    console.log("todos: ", todos);
+    //toggle completed class
+    text.classList.toggle("completed");
+  });
+  listItem.append(text, checkbox);
+  todoListEl?.append(listItem);
 };
 
-const completeTodo = () => {
-  todos.forEach;
-};
-//submit form
-newTodoForm?.addEventListener("submit", (e) => {
+//render todos
+//pass in function
+todos.forEach(createTodoElement);
+
+//on form submit
+newTodoFormEl?.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  //if null - return
+  if (newTodoInputEl?.value == "" || newTodoInputEl?.value == null) return;
 
   //id
   const todoIds: number[] = todos.map((todo) => todo.id); // [1, 2, 3]
   const maxId = Math.max(0, ...todoIds); // Math.max( 1, 2, 3 )
 
-  //new title
-  const newTodoTitle = newTodoTitleEl?.value;
-
   //new todo
   const newTodo: Todo = {
     id: maxId,
-    title: newTodoTitle,
+    title: newTodoInputEl.value,
     completed: false,
   };
 
-  //push to list
+  //add data to list
   todos.push(newTodo);
 
-  //render new list
-  renderTodos();
-
-  if (newTodoTitleEl) {
-    newTodoTitleEl.value = "";
-  }
+  //create UI
+  createTodoElement(newTodo);
+  newTodoInputEl.value = "";
 });
-
-//initial render of list
-renderTodos();

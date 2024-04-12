@@ -1,5 +1,59 @@
 import "./styles.scss";
 
+////////////1.1. Grundläggande DOM-manipulation
+
+//Type Assertions: HTMLInputElement -  to ensure we can use the value
+const firstHeading = document.querySelector<HTMLElement>(".heading-one")!;
+firstHeading.style.color = "pink";
+
+const firstParagraph = document.querySelector(
+  ".paragraph-one"
+) as HTMLInputElement;
+firstParagraph.style.border = "1px solid lightgreen";
+
+const firstDiv = document.querySelector(".div-one") as HTMLElement;
+firstDiv.innerHTML = "Hello World!";
+
+//1.2. Typer och DOM
+
+// type casting: as. Never gonna be null
+const myForm = document.querySelector(".cat-form") as HTMLFormElement;
+//                                                               ^?
+
+// const toggleComplete = () => {
+//   console.log("toggleComplete");
+// };
+
+//Optional chaining (?.)
+myForm?.addEventListener("submit", (e: Event) => {
+  e.preventDefault();
+  // console.log(myForm.children);
+
+  const catName = document.querySelector("#catName") as HTMLInputElement;
+  const catDescription = document.querySelector(
+    "#catDescription"
+  ) as HTMLInputElement;
+  const goOutside = document.querySelector("#goOutside") as HTMLInputElement;
+
+  console.log(
+    "catName: ",
+    catName.value,
+    "catDescription: ",
+    catDescription.value,
+    "goOutside: ",
+    goOutside.checked
+  );
+
+  //type?
+  let selectedRadioValue;
+  selectedRadioValue = (
+    myForm?.querySelector('[name="color"]:checked') as HTMLInputElement
+  ).value;
+
+  catName.value = "";
+  catDescription.value = "";
+});
+
 ///////////Todolist 1
 type Todo = {
   id: number;

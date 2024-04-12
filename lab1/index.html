@@ -12,75 +12,77 @@
     </header>
 
     <main>
-      <section>
-        <h2 class="site-heading">Basics</h2>
+      <section class="part">
+        <section>
+          <h2 class="site-heading">Basics</h2>
 
-        <h3>1.1. Grundläggande DOM-manipulation</h3>
+          <h3>1.1. Grundläggande DOM-manipulation</h3>
 
-        <h4 class="heading-one">First heading tag</h4>
-        <p class="paragraph-one">First paragraph tag</p>
-        <div class="div-one"></div>
-      </section>
+          <h4 class="heading-one">First heading tag</h4>
+          <p class="paragraph-one">First paragraph tag</p>
+          <div class="div-one"></div>
+        </section>
 
-      <section>
-        <h3>1.2. Typer och DOM</h3>
+        <section>
+          <h3>1.2. Typer och DOM</h3>
 
-        <form class="cat-form">
-          <label
-            >Name:
-            <input type="text" id="catName" />
-          </label>
+          <form class="cat-form">
+            <label
+              >Name:
+              <input type="text" id="catName" />
+            </label>
 
-          <label
-            >Description:
-            <textarea id="catDescription"></textarea>
-          </label>
+            <label
+              >Description:
+              <textarea id="catDescription"></textarea>
+            </label>
 
-          <label
-            >Go Out?:
-            <input
-              type="checkbox"
-              id="goOutside"
-              name="goOutside"
-              checked="true"
-              checked
-            />
-          </label>
-
-          <section class="cat-color">
-            <h4>Color:</h4>
-            <label>
-              Tigré:
+            <label
+              >Go Out?:
               <input
-                type="radio"
-                name="color"
-                id="color1"
-                value="tigre"
+                type="checkbox"
+                id="goOutside"
+                name="goOutside"
+                checked="true"
                 checked
               />
             </label>
-            <label>
-              Svart:
-              <input type="radio" name="color" id="color2" value="svart" />
-            </label>
-            <label>
-              SvartVit:
-              <input type="radio" name="color" id="color3" value="svartVit" />
-            </label>
-          </section>
 
-          <div class="btn-container">
-            <button class="submit-btn" type="submit">Send</button>
-          </div>
-        </form>
-      </section>
+            <section class="cat-color">
+              <h4>Color:</h4>
+              <label>
+                Tigré:
+                <input
+                  type="radio"
+                  name="color"
+                  id="color1"
+                  value="tigre"
+                  checked
+                />
+              </label>
+              <label>
+                Svart:
+                <input type="radio" name="color" id="color2" value="svart" />
+              </label>
+              <label>
+                SvartVit:
+                <input type="radio" name="color" id="color3" value="svartVit" />
+              </label>
+            </section>
 
-      <section>
-        <h3>2.1. Grundläggande DOM-händelser</h3>
-      </section>
+            <div class="btn-container">
+              <button class="submit-btn" type="submit">Send</button>
+            </div>
+          </form>
+        </section>
 
-      <section>
-        <h3>2.2. Händelser och typer</h3>
+        <section>
+          <h3>2.1. Grundläggande DOM-händelser</h3>
+        </section>
+
+        <section>
+          <h3>2.2. Händelser och typer</h3>
+        </section>
       </section>
 
       <section>
@@ -95,7 +97,7 @@
             >Title:
             <input
               type="text"
-              class="new-todo-title"
+              class="new-todo-input"
               name="title"
               placeholder="Enter a description of your new todo..."
           /></label>
@@ -110,6 +112,6 @@
     <footer>
       <p>Typescript - Medieinstitutet - 2024</p>
     </footer>
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/main_old.ts"></script>
   </body>
 </html>
