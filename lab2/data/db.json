@@ -7,8 +7,13 @@
     },
     {
       "id": 2,
-      "title": "Dancing",
-      "completed": false
+      "title": "Code my todos",
+      "completed": true
+    },
+    {
+      "title": "Styling the app",
+      "completed": false,
+      "id": 3
     }
   ]
 }

@@ -4,40 +4,102 @@ import { CreateTodoData, UpdateTodoData } from "./todo_types";
 
 const baseUrl = import.meta.env.VITE_API_BASEURL || "http://localhost:3000";
 
-//fetch - get
+// const handleError = (err: unknown) => {
+//   if (err instanceof AxiosError) {
+//     alert("Network error, response code was: " + err.message);
+//   } else if (err instanceof Error) {
+//     alert("Something went wrong: " + err.message);
+//   } else {
+//     alert("Something went wrong.");
+//   }
+// };
+
+// export const getTodosFetch = async () => {
+//   try {
+//     const response = await fetch(baseUrl + "/todos");
+//     if (!response.ok) {
+//       throw new Error(
+//         "Unable to Fetch Data, Please check URL or Network connectivity"
+//       );
+//     }
+//     const data: Todo[] = await response.json(); //- TYPE
+//     //   console.log("getTodosFetch :", data);
+//     return data;
+//   } catch (error) {
+//     console.error("There was a problem with the Fetch operation:", error);
+//   }
+// };
+
+//fetch - get all
 export const getTodosFetch = async () => {
   const response = await fetch(baseUrl + "/todos");
   if (!response.ok) {
-    throw new Error("Response was not OK!");
+    throw new Error(
+      "Unable to Fetch Data, Please check URL or Network connectivity"
+    );
   }
-  //typa här
-  const data: Todo[] = await response.json();
-  console.log("getTodosFetch:", data);
-  //varför type assertion här??
-  //   return data as Todo[];
+  const data: Todo[] = await response.json(); //- TYPE
+  //   console.log("getTodosFetch :", data);
   return data;
-  //   return (await response.json()) as Todo[];
 };
+
+//fetch - create new
+//- TYPE
+export const createTodosFetch = async (newItem: CreateTodoData) => {
+  const response = await fetch(baseUrl + "/todos", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newItem),
+  });
+  if (!response.ok) {
+    throw new Error(
+      "Unable to Fetch Data, Please check URL or Network connectivity"
+    );
+  }
+  const data: Todo[] = await response.json(); //- TYPE
+  // console.log("createTodosFetch :", data);
+  return data;
+};
+
+//fetch - update item
+//- TYPE
+export const updateTodoFetch = async (id: number, itemData: UpdateTodoData) => {
+  const response = await fetch(baseUrl + "/todos/" + id, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(itemData),
+  });
+  if (!response.ok) {
+    throw new Error(
+      "Unable to Fetch Data, Please check URL or Network connectivity"
+    );
+  }
+  const data: Todo[] = await response.json(); //- TYPE
+  // console.log("updateTodoFetch :", data);
+  return data;
+};
+
+//fetch - delete item
+export const deleteTodoFetch = async (id: number) => {
+  const response = await fetch(baseUrl + "/todos/" + id, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error(
+      "Unable to Fetch Data, Please check URL or Network connectivity"
+    );
+  }
+  const data: Todo[] = await response.json(); //- TYPE
+  // console.log("deleteTodoFetch :", data);
+  return data;
+};
+
+//AXIOS
 //axios- get
 export const getTodos = async () => {
   const response = await axios.get<Todo[]>(baseUrl + "/todos");
   console.log("axios_data:", response.data);
   return response.data;
-};
-
-//fetch - create
-export const createTodoFetch = async (item: CreateTodoData) => {
-  const response = await fetch(baseUrl + "/todos", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(item),
-  });
-  if (!response.ok) {
-    throw Error("Fetch data error: ");
-  }
-  const data: Todo[] = await response.json();
-  console.log("createTodoFetch:", data);
-  return data;
 };
 
 //axios- create
@@ -46,40 +108,11 @@ export const createTodo = async (item: CreateTodoData) => {
   return response.data;
 };
 
-//fetch - update
-export const updateTodoFetch = async (id: number, itemData: UpdateTodoData) => {
-  const response = await fetch(baseUrl + "/todos/" + id, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(itemData),
-  });
-  if (!response.ok) {
-    throw Error("Fetch data error: ");
-  }
-  const data: Todo[] = await response.json();
-  console.log("updateTodoFetch:", data);
-  return data;
-};
-
 //axios- update
 export const updateTodo = async (id: number, itemData: UpdateTodoData) => {
   const response = await axios.patch<Todo>(baseUrl + "/todos/" + id, itemData);
   return response.data;
 };
-
-//fetch - delete
-export const deleteTodoFetch = async (id: number) => {
-  const response = await fetch(baseUrl + "/todos/" + id, {
-    method: "DELETE",
-  });
-  if (!response.ok) {
-    throw Error("Fetch data error: ");
-  }
-  const data: Todo[] = await response.json();
-  console.log("deleteTodoFetch:", data);
-  return data;
-};
-
 //axios- delete
 export const deleteTodo = async (id: number) => {
   const response = await axios.delete<Todo>(baseUrl + "/todos/" + id);

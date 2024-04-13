@@ -1,35 +1,46 @@
 import "./styles.scss";
-import { Todo } from "./todo_types";
+import { Todo, CreateTodoData } from "./todo_types";
 import {
   getTodosFetch,
-  createTodoFetch,
-  getTodos,
-  createTodo,
+  createTodosFetch,
   updateTodoFetch,
-  updateTodo,
   deleteTodoFetch,
-  deleteTodo,
 } from "./api";
-import { CreateTodoData } from "./todo_types";
 
 ///////////Todolist 1
 //find elements
 const todoListEl = document.querySelector<HTMLUListElement>("#todo-list")!;
 const newTodoFormEl = document.querySelector<HTMLFormElement>("#new-todo-form");
 
-//local variable
+//local global variable - TYPE
 let todos: Todo[] = [];
 
-//need to have async-await, so new function
-const getTodosAndRender = async () => {
-  //get todos from serer
-  todos = await getTodosFetch();
+// const handleError = (err: unknown) => {
+//   if (err instanceof AxiosError) {
+//     alert("Network error, response code was: " + err.message);
+//   } else if (err instanceof Error) {
+//     alert("Something went wrong: " + err.message);
+//   } else {
+//     alert("Something went wrong.");
+//   }
+// };
 
-  //render UI
-  renderTodos();
+//get todos - need to have async-await all the way
+const getTodosAndRender = async () => {
+  try {
+    todos = await getTodosFetch();
+    //render UI
+    renderTodos();
+  } catch (error) {
+    console.error("Some Error Occurred:", error);
+  }
+
+  //   todos = await getTodosFetch();
+  //   //render UI
+  //   renderTodos();
 };
 
-//global scope
+//global scope for toggleCompleted and deleteTodo called from template literal
 const _global = window /* browser */ as any;
 
 //render UI list
@@ -37,14 +48,12 @@ const renderTodos = () => {
   todoListEl.innerHTML = todos
     .map((todo) => {
       //   console.log("renderTodos-todo:", todo);
-      return `<li id="listItem" class="list-item">
-        <span  class="${todo.completed ? "completed" : ""}"> ${
-        todo.title
-      }</span>
+      return `<li class="list-item">
+        <span class="${todo.completed ? "completed" : ""}"> ${todo.title}</span>
         <div>
-           <input type="checkbox" class="toggle" id="${todo.id}" ${
-        todo.completed ? "checked" : ""
-      } onchange="toggleCompleted(${todo.id})"/> 
+           <input type="checkbox" ${todo.completed ? "checked" : ""}
+            onchange="toggleCompleted(${todo.id})"/>
+       
         <button class="delete-todo" onclick="deleteTodo(${todo.id})">x</button>
         </div>
     </li>`;
@@ -52,68 +61,46 @@ const renderTodos = () => {
     .join("");
 };
 
-//submit form
-//create new todo, POST and rerender
+//submit form, create new todo, POST to db and rerender
 newTodoFormEl?.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const newTodoInputEl =
-    document.querySelector<HTMLFormElement>("#new-todo-input");
+    document.querySelector<HTMLFormElement>("#new-todo-input")!;
 
-  //new todo
+  //new todo - TYPE
   const newTodo: CreateTodoData = {
     title: newTodoInputEl?.value,
     completed: false,
   };
 
-  //UTAN DB
-  //todos.push(newTodo);
-
-  // POST new todo to API
-  await createTodoFetch(newTodo);
-
-  if (newTodoInputEl) {
-    newTodoInputEl.value = "";
-  }
-  //render UI list
+  createTodosFetch(newTodo);
   getTodosAndRender();
+  newTodoInputEl.value = "";
 });
 
-//toggleCompleted
+//toggle comleted item
 _global.toggleCompleted = async (id: number) => {
-  //UTAN DB
-  //map/if -> search for item to modify
-  // const updatedTodos = todos.map((todo) => {
-  //   if (todo.id === id) {
-  //     return { ...todo, completed: !todo.completed };
-  //   } else return todo;
-  // });
-  // todos = updatedTodos;
-  // renderTodos();
+  //already reads completed from data to UI
+  console.log("toggleCompleted", todos);
+  //need to set completed to data from UI
 
-  //search for item to modify
-  const todo = todos.find((todo) => todo.id === id);
-  if (!todo) {
+  //find item
+  const updatedTodo = todos.find((todo) => todo.id === id);
+  //check
+  if (!updatedTodo) {
     return;
   }
-  await updateTodoFetch(id, { completed: !todo.completed });
+  updateTodoFetch(id, { completed: !updatedTodo.completed });
   //render UI list
   getTodosAndRender();
 };
 
-//delete
+//delete item
 _global.deleteTodo = async (id: number) => {
-  //UTAN DB
-  //   const updatedTodos = todos.filter((todo) => {
-  //     return todo.id != id;
-  //   });
-  //   todos = updatedTodos;
-  //   renderTodos();
-
-  await deleteTodoFetch(id);
-  //render UI list
+  deleteTodoFetch(id);
   getTodosAndRender();
 };
 
-//initial render UI list
+//initial get and render
 getTodosAndRender();
