@@ -4,39 +4,11 @@ import { CreateTodoData, UpdateTodoData } from "./todo_types";
 
 const baseUrl = import.meta.env.VITE_API_BASEURL || "http://localhost:3000";
 
-// const handleError = (err: unknown) => {
-//   if (err instanceof AxiosError) {
-//     alert("Network error, response code was: " + err.message);
-//   } else if (err instanceof Error) {
-//     alert("Something went wrong: " + err.message);
-//   } else {
-//     alert("Something went wrong.");
-//   }
-// };
-
-// export const getTodosFetch = async () => {
-//   try {
-//     const response = await fetch(baseUrl + "/todos");
-//     if (!response.ok) {
-//       throw new Error(
-//         "Unable to Fetch Data, Please check URL or Network connectivity"
-//       );
-//     }
-//     const data: Todo[] = await response.json(); //- TYPE
-//     //   console.log("getTodosFetch :", data);
-//     return data;
-//   } catch (error) {
-//     console.error("There was a problem with the Fetch operation:", error);
-//   }
-// };
-
 //fetch - get all
 export const getTodosFetch = async () => {
   const response = await fetch(baseUrl + "/todos");
   if (!response.ok) {
-    throw new Error(
-      "Unable to Fetch Data, Please check URL or Network connectivity"
-    );
+    throw new Error("Response is not ok!");
   }
   const data: Todo[] = await response.json(); //- TYPE
   //   console.log("getTodosFetch :", data);

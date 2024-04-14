@@ -24,6 +24,14 @@ let todos: Todo[] = [];
 //     alert("Something went wrong.");
 //   }
 // };
+// const handleError = (err: unknown) => {
+//   if (err instanceof Error) {
+//     alert("Something went wrong: " + err.message);
+//   } else {
+//     //this should never happen??
+//     alert("Something went wrong.");
+//   }
+// };
 
 //get todos - need to have async-await all the way
 const getTodosAndRender = async () => {
@@ -32,12 +40,8 @@ const getTodosAndRender = async () => {
     //render UI
     renderTodos();
   } catch (error) {
-    console.error("Some Error Occurred:", error);
+    console.error("###get todos and render error:", error);
   }
-
-  //   todos = await getTodosFetch();
-  //   //render UI
-  //   renderTodos();
 };
 
 //global scope for toggleCompleted and deleteTodo called from template literal
@@ -74,9 +78,14 @@ newTodoFormEl?.addEventListener("submit", async (e) => {
     completed: false,
   };
 
-  createTodosFetch(newTodo);
-  getTodosAndRender();
+  try {
+    await createTodosFetch(newTodo);
+  } catch (error) {
+    console.error("###create todo error:", error);
+  }
   newTodoInputEl.value = "";
+
+  getTodosAndRender();
 });
 
 //toggle comleted item
@@ -91,14 +100,23 @@ _global.toggleCompleted = async (id: number) => {
   if (!updatedTodo) {
     return;
   }
-  updateTodoFetch(id, { completed: !updatedTodo.completed });
+
+  try {
+    updateTodoFetch(id, { completed: !updatedTodo.completed });
+  } catch (error) {
+    console.error("###update todo error:", error);
+  }
   //render UI list
   getTodosAndRender();
 };
 
 //delete item
 _global.deleteTodo = async (id: number) => {
-  deleteTodoFetch(id);
+  try {
+    await deleteTodoFetch(id);
+  } catch (error) {
+    console.error("###delete todo error:", error);
+  }
   getTodosAndRender();
 };
 
